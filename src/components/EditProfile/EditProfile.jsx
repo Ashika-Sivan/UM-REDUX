@@ -77,7 +77,7 @@ const EditProfile = () => {
     }
 
     try {
-      const response = await axiosInstance.put("user/update", formData, {
+      const response = await axiosInstance.put("/user/update", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

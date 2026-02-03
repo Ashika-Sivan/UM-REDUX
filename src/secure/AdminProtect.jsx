@@ -1,35 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import React from 'react'
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
+export default function AdminProtect({children}) {
+ const isAdminLoggedIn=useSelector((state)=>state.admin.AdminLoggedIn);
+const isUserLoggedIn=useSelector((state)=>state.auth.isLoggedIn)
+ 
 
-
-
-export function AdminProtect({children}){
-    const isAdminLoggedIn=useSelector((state)=>state.admin.AdminLoggedIn)
-    if(!isAdminLoggedIn){
-        return <Navigate to='/admin/login'replace/>
-    }
-    return children
+if(isUserLoggedIn){
+    return <Navigate to='/home'/>
+}else if(!isAdminLoggedIn){
+    return <Navigate to='/admin/login'/>
 }
 
-export function AdminLoginProtect({children}){
-    const isAdminLoggedIn=useSelector((state)=>state.admin.AdminLoggedIn);
-    const isUserLoggedIn=useSelector((state)=>state.auth.isLoggedIn)
+return children
 
-
-    console.log('Admin STATUS=>',{
-        isAdminLoggedIn,
-        isUserLoggedIn
-    });
-
-    if(isAdminLoggedIn){
-        return <Navigate to='/admin/home' replace/>
-    }
-
-    if(isUserLoggedIn){
-        return <Navigate to='/home' replace/>
-    }
-    return children
-    
 }
